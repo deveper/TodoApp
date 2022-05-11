@@ -12,6 +12,16 @@ const clearButton = document.querySelector("#clear-todos");
 eventListeners();
 function eventListeners() {
     form.addEventListener("submit", addTodo);
+    document.addEventListener("DOMContentLoaded", loadAllTodosToUI);
+}
+function loadAllTodosToUI() {
+    let todos = getTodosFromStorage();
+    todos.forEach(function (todo) {
+
+        addTodoToUI(todo)
+
+    })
+
 }
 
 function addTodo(e) {
@@ -49,8 +59,8 @@ function addTodoToLocalStorage(newTodo) {
 
 }
 
-function showAlert(type, message) {
-    //     <div class="alert alert-danger" role="alert">
+function showAlert(type, message) {//bu fonksiyon b
+    //     <div class="alert alert-danger" role="al
     //   A simple danger alert—check it out!
     // </div>
     const alertDiv = document.createElement("div");
@@ -83,7 +93,6 @@ function addTodoToUI(newTodo) {
     link.className = "delete-item";
     link.innerHTML = "<i class = 'fa fa-remove'></i>";
     listItem.className = "list-group-item d-flex justify-content-between";
-
     listItem.appendChild(document.createTextNode(newTodo));
     listItem.appendChild(link);
     todoList.appendChild(listItem);
