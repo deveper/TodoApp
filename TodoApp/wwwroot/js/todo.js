@@ -11,9 +11,24 @@ const clearButton = document.querySelector("#clear-todos");
 
 eventListeners();
 function eventListeners() {
-    form.addEventListener("submit", addTodo);
+    form.addEventListener("submit", addTodo)
     document.addEventListener("DOMContentLoaded", loadAllTodosToUI);
+    secondCardBody.addEventListener("click", deleteTodo);
 }
+function deleteTodo(e) {
+    if (e.target.className === "fa fa-remove") {
+        if (confirm("bu todo silinecektir") == true) {
+            e.target.parentElement.parentElement.remove();
+            showAlert("success", "Todo Silindi");
+
+        }
+        else {
+            showAlert("info", "TodoSilinmedi");
+        }
+    }
+
+}
+
 function loadAllTodosToUI() {
     let todos = getTodosFromStorage();
     todos.forEach(function (todo) {
@@ -59,8 +74,8 @@ function addTodoToLocalStorage(newTodo) {
 
 }
 
-function showAlert(type, message) {//bu fonksiyon b
-    //     <div class="alert alert-danger" role="al
+function showAlert(type, message) {
+    //     <div class="alert alert-danger" role="alert">
     //   A simple danger alert—check it out!
     // </div>
     const alertDiv = document.createElement("div");
@@ -93,6 +108,7 @@ function addTodoToUI(newTodo) {
     link.className = "delete-item";
     link.innerHTML = "<i class = 'fa fa-remove'></i>";
     listItem.className = "list-group-item d-flex justify-content-between";
+    //textimizi ekleme 
     listItem.appendChild(document.createTextNode(newTodo));
     listItem.appendChild(link);
     todoList.appendChild(listItem);
