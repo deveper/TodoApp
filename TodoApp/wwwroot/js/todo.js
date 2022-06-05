@@ -86,30 +86,24 @@ function loadAllTodosToUI() {
 }
 
 function addTodo(e) {
-    const newTodo = todoInput.value.trim();
-    let list = new Array();
+    const newTodo = todoInput.value.trim().toLowerCase();
+    var Todox = newTodo.value;
+    let watchList = new Array();
     let listItems = document.querySelectorAll(".list-group-item");
-    list = listItems;
-    let text;
-
     if (listItems.length != 0) {
-        try {
-            list.forEach(function (i) {
-                text = i.textContent;
-                if (text === newTodo) {
-                    throw alert("Aynı isimli Todo zaten vardır");
-                }
-                else if (text != newTodo) {
-                    return addd(newTodo);
-                }
-            });
+
+        listItems.forEach(function (i) {
+            const text = i.textContent.toLowerCase();
+            watchList.push(text);
+        });
+        if (watchList.includes(newTodo)) {
+            alert(`${newTodo} İsimli Todo Vardır Lütfen başka bir Todo başlığı yazın`);
         }
-        catch (e) {
-
+        else {
+            addd(newTodo);
         }
-
-
     }
+
     else if (listItems.length === 0) {
         addd(newTodo)
     }
@@ -123,6 +117,7 @@ function addTodo(e) {
 
 
     e.preventDefault();
+
 }
 
 function addd(newTodo) {
@@ -161,9 +156,6 @@ function addTodoToLocalStorage(newTodo) {
 }
 
 function showAlert(type, message) {
-    //     <div class="alert alert-danger" role="alert">
-    //   A simple danger alert—check it out!
-    // </div>
     const alertDiv = document.createElement("div");
     alertDiv.className = `alert alert-${type}`;
     alertDiv.textContent = message;
@@ -194,7 +186,6 @@ function addTodoToUI(newTodo) {
     link.className = "delete-item";
     link.innerHTML = "<i class = 'fa fa-remove'></i>";
     listItem.className = "list-group-item d-flex justify-content-between";
-    //textimizi ekleme 
     listItem.appendChild(document.createTextNode(newTodo));
     listItem.appendChild(link);
     todoList.appendChild(listItem);
